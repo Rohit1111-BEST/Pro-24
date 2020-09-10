@@ -1,5 +1,5 @@
-var  trashSprite,trashBody;
-var  ground, box;
+var  paper,paperBody;
+var  ground, dustbin;
 const Engine = Matter.Engine;
 const World = Matter.World;
 const Bodies = Matter.Bodies;
@@ -19,37 +19,23 @@ function preload()
 function setup() {
 	createCanvas(800, 700);
 	rectMode(CENTER);
-	
-
-    
-
-
-	trashSprite=createSprite(width/2, 80, 10,10);
-	
-
-	
-	
-	
-
-	groundSprite=createSprite(width/2, height-35, width,10);
-	groundSprite.shapeColor=color(255)
 
 
 	engine = Engine.create();
 	world = engine.world;
 
-	trashBody = Bodies.circle(width/2 , 200 , 5 , {restitution:0.5, isStatic:true});
-	World.add(world, trashBody);
+	DustbinBody = Bodies.circle(width/2 , 200 , 5 , {restitution:0.5, isStatic:true});
+	World.add(world, paperBody);
 
-	trashSprite.x= trashBody.position.x;
-	trashSprite.y= trashBody.position.y;
+	paper.x= paperBody.position.x;
+	paper.y= paperBody.position.y;
 
 	//Create a Ground
 	ground = Bodies.rectangle(width/2, 650, width, 10 , {isStatic:true} );
 	 World.add(world, ground);
 	 
-	 box = Bodies.rectangle(width/2, 500, width, 10, {isStatic:true});
-	 World.add(world, box);
+	 dustbin = Bodies.rectangle(width/2, 500, width, 10, {isStatic:true});
+	 World.add(world, dustbin);
 
 
 	Engine.run(engine);
@@ -60,10 +46,14 @@ function setup() {
 function draw() {
   rectMode(CENTER);
   background(0);
-  rect(box.position.x,box.position.y,500,10);
+  rect(dustbin.position.x,dustbin.position.y,500,10);
 
-  trashSprite.x= trashBody.position.x 
-  trashSprite.y= trashBody.position.y 
+  ground=new Ground(width/2, height-35, width,10);
+dustbin1 = new Dustbin(420,height-50, 70,10);
+dustbin2 = new Dustbin(460,height-80,10,50);
+dustbin3 = new Dustbin(380,height-80,10,50);
+paper = new Paper(200,200,20,20);
+
   drawSprites();
  
 }
@@ -73,6 +63,6 @@ function keyPressed() {
  if (keyCode === DOWN_ARROW) {
 	
     // Look at the hints in the document and understand how to make the package body fall only on
-    Matter.Body.setStatic(trashBody,false);
+    Matter.Body.setStatic(paperBody,false);
   }
 }
