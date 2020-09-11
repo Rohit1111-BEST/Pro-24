@@ -20,9 +20,14 @@ function setup() {
 	createCanvas(800, 700);
 	rectMode(CENTER);
 
-
 	engine = Engine.create();
 	world = engine.world;
+
+	ground=new Ground(width/2, height-35, width,10);
+	dustbin1 = new Dustbin(420,height-50, 70,10);
+	dustbin2 = new Dustbin(460,height-80,10,50);
+	dustbin3 = new Dustbin(380,height-80,10,50);
+	paper = new Paper(200,200,20,20);
 
 	DustbinBody = Bodies.circle(width/2 , 200 , 5 , {restitution:0.5, isStatic:true});
 	World.add(world, paperBody);
@@ -39,7 +44,13 @@ function setup() {
 
 
 	Engine.run(engine);
-  
+
+
+ground.display();
+dustinbin1.display();
+dustinbin2.display();
+dustinbin3.display();
+paper.display();
 }
 
 
@@ -48,11 +59,7 @@ function draw() {
   background(0);
   rect(dustbin.position.x,dustbin.position.y,500,10);
 
-  ground=new Ground(width/2, height-35, width,10);
-dustbin1 = new Dustbin(420,height-50, 70,10);
-dustbin2 = new Dustbin(460,height-80,10,50);
-dustbin3 = new Dustbin(380,height-80,10,50);
-paper = new Paper(200,200,20,20);
+
 
   drawSprites();
  
@@ -60,9 +67,9 @@ paper = new Paper(200,200,20,20);
 
 function keyPressed() {
 
- if (keyCode === DOWN_ARROW) {
+ if (keyCode === UP_ARROW) {
 	
     // Look at the hints in the document and understand how to make the package body fall only on
-    Matter.Body.setStatic(paperBody,false);
+    Matter.Body.applyForce(paperObject.body,paperObject.body.position,{x:85,y:-85});
   }
 }
